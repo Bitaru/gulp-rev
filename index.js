@@ -134,7 +134,8 @@ plugin.manifest = function (pth, opts) {
 		}
 
 		firstFile = firstFile || file;
-		manifest[relPath(firstFile.revOrigBase, file.revOrigPath)] = relPath(firstFile.base, file.path);
+		var newPath = relPath(firstFile.base, file.path);
+		manifest[newPath.replace('-'+file.revHash, '')] = newPath;
 
 		cb();
 	}, function (cb) {
