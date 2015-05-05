@@ -135,7 +135,7 @@ plugin.manifest = function (pth, opts) {
 
 		firstFile = firstFile || file;
 		var newPath = relPath(firstFile.base, file.path);
-		manifest[newPath.replace('-'+file.revHash, '')] = newPath;
+		manifest[newPath.replace('-'+file.revHash, '')] = (opts.prefix || '') + newPath;
 
 		cb();
 	}, function (cb) {
