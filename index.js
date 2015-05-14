@@ -53,10 +53,11 @@ function transformFilename(file) {
 	file.path = path.join(path.dirname(file.path), filename);
 }
 
-var plugin = function () {
+var plugin = function (salt) {
 	var sourcemaps = [];
 	var pathMap = {};
-
+	
+	_SALT_ = salt;
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
@@ -121,11 +122,9 @@ plugin.manifest = function (pth, opts) {
 
 	opts = objectAssign({
 		path: 'rev-manifest.json',
-		merge: false,
-		salt: ''
+		merge: false
 	}, opts, pth);
 
-	_SALT_ = opts.salt;
 	var firstFile = null;
 	var manifest  = {};
 
