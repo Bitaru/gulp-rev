@@ -5,9 +5,10 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var objectAssign = require('object-assign');
 var file = require('vinyl-file');
+var _SALT_ = '';
 
 function md5(str) {
-	return crypto.createHash('md5').update(str).digest('hex');
+	return crypto.createHash('md5').update(_SALT_+str).digest('hex');
 }
 
 function relPath(base, filePath) {
@@ -120,9 +121,11 @@ plugin.manifest = function (pth, opts) {
 
 	opts = objectAssign({
 		path: 'rev-manifest.json',
-		merge: false
+		merge: false,
+		salt: ''
 	}, opts, pth);
 
+	_SALT_ = opts.salt;
 	var firstFile = null;
 	var manifest  = {};
 
